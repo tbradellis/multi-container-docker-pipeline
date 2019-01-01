@@ -4,22 +4,22 @@ services:
 
 
 before_install:
-  - docker build -t bellisbkb/test-react -f ./client/Dockerfile-dev .
+  - docker build -t $DOCKER_ID/test-react -f ./client/Dockerfile-dev .
 
 script:
-  - docker run bellisbkb/test-react npm run test -- --coverage
+  - docker run $DOCKER_ID/test-react npm run test -- --coverage
 
 after_success: 
-  - docker built -t bellisbkb/multi-client ./client   
-  - docker built -t bellisbkb/multi-server ./server
-  - docker built -t bellisbkb/multi-nginx ./nginx 
-  - docker built -t bellisbkb/multi-worker ./worker
+  - docker built -t $DOCKER_ID/multi-client ./client   
+  - docker built -t $DOCKER_ID/multi-server ./server
+  - docker built -t $DOCKER_ID/multi-nginx ./nginx 
+  - docker built -t $DOCKER_ID/multi-worker ./worker
   #overcome command line sequential login prompt 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push bellisbkb/multi-client
-  - docker push bellisbkb/multi-server
-  - docker push bellisbkb/multi-nginx
-  - docker push bellisbkb/multi-worker
+  - docker push $DOCKER_ID/multi-client
+  - docker push $DOCKER_ID/multi-server
+  - docker push $DOCKER_ID/multi-nginx
+  - docker push $DOCKER_ID/multi-worker
 
 
 
