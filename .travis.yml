@@ -10,10 +10,10 @@ script:
   - docker run "$DOCKER_ID"/test-react npm run test -- --coverage
 
 after_success: 
-  - docker built -t "$DOCKER_ID"/multi-client ./client   
-  - docker built -t "$DOCKER_ID"/multi-server ./server
-  - docker built -t "$DOCKER_ID"/multi-nginx ./nginx 
-  - docker built -t "$DOCKER_ID"/multi-worker ./worker
+  - docker build -t "$DOCKER_ID"/multi-client ./client   
+  - docker build -t "$DOCKER_ID"/multi-server ./server
+  - docker build -t "$DOCKER_ID"/multi-nginx ./nginx 
+  - docker build -t "$DOCKER_ID"/multi-worker ./worker
   #overcome command line sequential login prompt 
   - echo "$DOCKER_PASSWORD" | docker login -u ""$DOCKER_ID"" --password-stdin
   - docker push "$DOCKER_ID"/multi-client
