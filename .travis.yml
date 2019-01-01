@@ -4,22 +4,22 @@ services:
 
 
 before_install:
-  - docker build -t tbellis/test-react -f ./client/Dockerfile-dev ./client
+  - docker build -t bellisbkb/test-react -f ./client/Dockerfile-dev .
 
 script:
-  - docker run tbellis/test-react npm run test -- --coverage
+  - docker run bellisbkb/test-react npm run test -- --coverage
 
 after_success: 
-  - docker built -t tbellis/multi-client ./client   
-  - docker built -t tbellis/multi-server ./server
-  - docker built -t tbellis/multi-nginx ./nginx 
-  - docker built -t tbellis/multi-worker ./worker
+  - docker built -t bellisbkb/multi-client ./client   
+  - docker built -t bellisbkb/multi-server ./server
+  - docker built -t bellisbkb/multi-nginx ./nginx 
+  - docker built -t bellisbkb/multi-worker ./worker
   #overcome command line sequential login prompt 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push tbellis/multi-client
-  - docker push tbellis/multi-server
-  - docker push tbellis/multi-nginx
-  - docker push tbellis/multi-worker
+  - docker push bellisbkb/multi-client
+  - docker push bellisbkb/multi-server
+  - docker push bellisbkb/multi-nginx
+  - docker push bellisbkb/multi-worker
 
 
 
