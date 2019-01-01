@@ -1,0 +1,37 @@
+sudo: required
+services:
+  - docker
+
+
+before_install:
+  - docker build -t tbellis/test-react -f ./client/Dockerfile-dev .
+
+script:
+  - docker run tbellis/test-react npm run test -- --coverage
+
+after_success: 
+  - docker built -t tbellis/multi-client ./client   
+  - docker built -t tbellis/multi-server ./server
+  - docker built -t tbellis/multi-nginx ./nginx 
+  - docker built -t tbellis/multi-worker ./worker
+  #overcome command line sequential login prompt 
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push tbellis/multi-client
+  - docker push tbellis/multi-server
+  - docker push tbellis/multi-nginx
+  - docker push tbellis/multi-worker
+
+
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-west-2"
+#   app: "multi-container-docker-pipeline"
+#   env: "DockerReactRedis-env"
+#   bucket_name: "elasticbeanstalk-us-west-2-374863017875"
+#   bucket_path: "docker-react"
+#   on:
+#     branch: master
+#   access_key_id: "$AWS_ACCESS_KEY"
+#   secret_access_key:
+#       secure: "$AWS_SECRET_KEY"
