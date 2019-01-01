@@ -4,7 +4,7 @@ services:
 
 
 before_install:
-  - docker build -t tbellis/test-react -f ./client/Dockerfile-dev .
+  - docker build -t tbellis/test-react -f ./client/Dockerfile-dev ./client
 
 script:
   - docker run tbellis/test-react npm run test -- --coverage
