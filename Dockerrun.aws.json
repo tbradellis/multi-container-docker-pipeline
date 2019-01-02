@@ -1,0 +1,38 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "bellisbkb/multi-client",
+            "hostname": "client",
+            "essential": false
+            
+        },
+        {
+            "name": "server",
+            "image": "bellisbkb/multi-server",
+            "hostname": "api",
+            "essential": false
+            
+        },
+        {
+            "name": "worker",
+            "image": "bellisbkb/multi-worker",
+            "hostname": "worker",
+            "essential": false            
+        },
+        {
+            "name": "nginx",
+            "image": "bellisbkb/multi-nginx",
+            "hostname": "nginx",
+            "essential": true, 
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"]           
+        }      
+    ]
+}
